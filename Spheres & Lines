@@ -1,0 +1,24 @@
+import rhinoscriptsyntax as rs
+ 
+ 
+def createColoredPoint(x,y,z,r,g,b):
+    currentColor = [r,g,b]
+    pt = rs.AddPoint(x,y,z)
+    cr = rs.AddSphere(pt, 3)
+    rs.ObjectColor(cr, currentColor)
+    if x < 50:
+            ln = rs.AddLine(pt, (x * x / 10, y + 20, z + 30))
+    else:
+      ln = rs.AddLine(pt, (-x , y - 20, z + 30))
+    rs.ObjectColor(ln, currentColor)
+    
+
+ 
+rs.EnableRedraw(False)
+step = 10
+ 
+for x in range(0,100, step):
+    for y in range(0,100, step):
+        for z in range(0,100,step):
+            createColoredPoint(x  ,y  ,z ,x,y,z)
+rs.Redraw()
